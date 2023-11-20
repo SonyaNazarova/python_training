@@ -1,60 +1,65 @@
-# -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.common.by import By
+
+
 import unittest, time, re
 
-class TestAddGroup(unittest.TestCase):
+class AddGroup(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Chrome(executable_path=r'')
-        self.wd.implicitly_wait(30)
+        self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(30)
 
-    
     def test_add_group(self):
-        wd = self.wd
-        wd.get("http://localhost/addressbook/group.php")
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-        wd.find_element_by_xpath("//input[@value='Login']").click()
-        wd.find_element_by_name("new").click()
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys("1")
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys("123")
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys("1234")
-        wd.find_element_by_name("submit").click()
-        wd.find_element_by_link_text("group page").click()
-        wd.find_element_by_link_text("Logout").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
-    
+        driver = self.driver
+        driver.get("http://localhost/addressbook/")
+        self.auth(driver, "admin", "secret")
+        driver.find_element(By.ID,"header").click()
+        driver.find_element(By.LINK_TEXT,"groups").click()
+        self.add_group(driver)
+        driver.find_element(By.LINK_TEXT,"group page").click()
+        driver.find_element(By.LINK_TEXT,"Logout").click()
+
+
+    def auth(self,driver,usarname,password):
+        field_name = driver.find_element("name", "user")
+        field_name.send_keys(usarname)
+        field_pas = driver.find_element("name", "pass")
+        field_pas.send_keys(password)
+        driver.find_element(By.XPATH, "//input[@value='Login']").click()
+
+
+    def add_group(self,driver):
+        driver.find_element(By.NAME,"new").click()
+        driver.find_element(By.NAME,"group_name").send_keys("1")
+        driver.find_element(By.NAME,"group_header").send_keys("2")
+        driver.find_element(By.NAME,"group_footer").send_keys("3")
+        driver.find_element(By.NAME,"submit").click()
+
     def is_element_present(self, how, what):
-        try: self.wd.find_element(by=how, value=what)
+        try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
         return True
-    
+
     def is_alert_present(self):
-        try: self.wd.switch_to_alert()
+        try: self.driver.switch_to_alert()
         except NoAlertPresentException as e: return False
         return True
 
-    
-    def tearDown(self):
-        self.wd.quit()
+    def close_alert_and_get_its_text(self):
+        try:
+            alert = self.driver.switch_to_alert()
+            alert_text = alert.text
+            if self.accept_next_alert:
+                alert.accept()
+            else:
+                alert.dismiss()
+            return alert_text
+        finally: self.accept_next_alert = True
 
+    def tearDown(self):
+        self.driver.quit()
 
 if __name__ == "__main__":
     unittest.main()
