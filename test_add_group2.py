@@ -37,6 +37,7 @@ class TestAddGroup2(unittest.TestCase):
         wd.find_element("link text","group page").click()
         wd.find_element("link text","Logout").click()
 
+
     def is_element_present(self, how, what):
         try:
             self.wd.find_element(by=how, value=what)
