@@ -1,6 +1,6 @@
 class Group:
 
-    def __init__(self, firstname, middlename, lastname, nickname, title, company, address, TelephoneHome, TelephoneMobile, TelephoneWork, fax, email, email2, email3, homepage, bday, bmonth,
+    def __init__(self, firstname, middlename, lastname, nickname, title, company, address, telephone_home, telephone_mobile, telephone_work, fax, email, email2, email3, homepage, bday, bmonth,
                  byear, aday, amonth, ayear, address2, phone2, notes):
         self.firstname = firstname
         self.middlename = middlename
@@ -9,9 +9,9 @@ class Group:
         self.title = title
         self.company = company
         self.address = address
-        self.TelephoneHome = TelephoneHome
-        self.TelephoneMobile = TelephoneMobile
-        self.TelephoneWork = TelephoneWork
+        self.telephone_home = telephone_home
+        self.telephone_mobile = telephone_mobile
+        self.telephone_work = telephone_work
         self.fax = fax
         self.email = email
         self.email2 = email2

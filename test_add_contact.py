@@ -51,13 +51,13 @@ class TestAddContact(unittest.TestCase):
         wd.find_element("name","address").send_keys(contact.address)
         wd.find_element("name","home").click()
         wd.find_element("name","home").clear()
-        wd.find_element("name","home").send_keys(contact.TelephoneHome)
+        wd.find_element("name","home").send_keys(contact.telephone_home)
         wd.find_element("name","mobile").click()
         wd.find_element("name","mobile").clear()
-        wd.find_element("name","mobile").send_keys(contact.TelephoneMobile)
+        wd.find_element("name","mobile").send_keys(contact.telephone_mobile)
         wd.find_element("name","work").click()
         wd.find_element("name","work").clear()
-        wd.find_element("name","work").send_keys(contact.TelephoneWork)
+        wd.find_element("name","work").send_keys(contact.telephone_work)
         wd.find_element("name","fax").click()
         wd.find_element("name","fax").clear()
         wd.find_element("name","fax").send_keys(contact.fax)
@@ -113,8 +113,8 @@ class TestAddContact(unittest.TestCase):
         self.open_home_paqe(wd)
         self.loqin(wd, username="admin", password="secret")
         self.open_contact_page(wd)
-        self.create_contact(wd, Group(firstname="2",middlename="1", lastname="3", nickname="4", title="5", address="7", company="6", TelephoneHome="8", TelephoneMobile="9",
-                            TelephoneWork="10", fax="11", email="12", email2="13", email3="14", homepage="15", bday="9",
+        self.create_contact(wd, Group(firstname="2",middlename="1", lastname="3", nickname="4", title="5", address="7", company="6", telephone_home="8", telephone_mobile="9",
+                            telephone_work="10", fax="11", email="12", email2="13", email3="14", homepage="15", bday="9",
                             bmonth="January", byear="1988", aday="14", amonth="February", ayear="2000", address2="16", phone2="17", notes="18"))
         self.return_to_home(wd)
         self.Logout(wd)
