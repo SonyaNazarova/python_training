@@ -5,17 +5,22 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest
 
 
+
 class test_add_group2(unittest.TestCase):
     def setUp(self):
+        self.app = Applicatoin()
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
 
-    def open_home_paqe(self, wd):
+    def open_home_paqe(self):
+        wd = self.wd
         wd.get("http://localhost/addressbook/")
 
 
-    def loqin(self, wd, username, password):
+    def loqin(self, username, password):
+        wd = self.wd
+        self.open_home_paqe()
         wd.find_element("name", "user").clear()
         wd.find_element("name", "user").send_keys(username)
         wd.find_element("name", "pass").click()
@@ -24,11 +29,14 @@ class test_add_group2(unittest.TestCase):
         wd.find_element("xpath", "//input[@value='Login']").click()
 
 
-    def open_groups_page(self, wd):
+    def open_groups_page(self):
+        wd = self.wd
         wd.find_element("link text", "groups").click()
 
 
-    def create_group(self, wd, name, header, footer):
+    def create_group(self, name, header, footer):
+        wd = self.wd
+        self.open_groups_page()
         # init group creation
         wd.find_element("name", "new").click()
         # fill group form
@@ -43,33 +51,28 @@ class test_add_group2(unittest.TestCase):
         wd.find_element("name", "group_footer").send_keys(footer)
         # submit group creation
         wd.find_element("name", "submit").click()
+        self.return_to_group_page()
 
 
-    def return_to_group_page(self, wd):
+    def return_to_group_page(self):
+        wd = self.wd
         wd.find_element("link text", "group page").click()
 
 
-    def logout(self, wd):
+    def logout(self):
+        wd = self.wd
         wd.find_element("link text", "Logout").click()
 
     def test_add_group2(self):
-        wd = self.wd
-        self.open_home_paqe(wd)
-        self.loqin(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
-        self.create_group(wd, name="2", header="234", footer="2345")
-        self.return_to_group_page(wd)
-        self.logout(wd)
+        self.loqin(username="admin", password="secret")
+        self.create_group(name="2", header="234", footer="2345")
+        self.logout()
 
 
     def test_add_empty_group2(self):
-        wd = self.wd
-        self.open_home_paqe(wd)
-        self.loqin(wd, username="admin", password="secret")
-        self.open_groups_page(wd)
-        self.create_group(wd, name="", header="", footer="")
-        self.return_to_group_page(wd)
-        self.logout(wd)
+        self.loqin(username="admin", password="secret")
+        self.create_group(name="", header="", footer="")
+        self.logout()
 
     def is_element_present(self, how, what):
         try:

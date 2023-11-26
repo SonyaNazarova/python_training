@@ -1,11 +1,11 @@
-from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium import webdriver
 
 
 class Application:
 
-    def __int__(self):
-        self.wd = WebDriver ()
-        self.wd.implicitly_wait(60)
+    def __init__(self):
+        self.wd = webdriver.Firefox()
+        self.wd.implicitly_wait(30)
 
     def open_home_paqe(self):
         wd = self.wd
@@ -15,6 +15,7 @@ class Application:
     def loqin(self, username, password):
         wd = self.wd
         self.open_home_paqe()
+        wd.find_element("name", "pass").click()
         wd.find_element("name", "user").clear()
         wd.find_element("name", "user").send_keys(username)
         wd.find_element("name", "pass").click()
@@ -45,10 +46,10 @@ class Application:
         wd.find_element("name", "group_footer").send_keys(group.footer)
         # submit group creation
         wd.find_element("name", "submit").click()
-        self.return_to_group_page()
+        self.return_to_groups_page()
 
 
-    def return_to_group_page(self):
+    def return_to_groups_page(self):
         wd = self.wd
         wd.find_element("link text", "group page").click()
 
