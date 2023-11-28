@@ -8,3 +8,11 @@ def test_add_contact(app):
                              telephone_work="10", fax="11", email="12", email2="13", email3="14", homepage="15", bday="9",
                              bmonth="January", byear="1988", aday="14", amonth="February", ayear="2000", address2="16", phone2="17", notes="18"))
     app.session.logout()
+
+
+def test_add_empty_contact(app):
+    app.session.loqin(username="admin", password="secret")
+    app.contact.create(Group(firstname="", middlename="", lastname="", nickname="", title="", address="", company="", telephone_home="", telephone_mobile="",
+                             telephone_work="", fax="", email="", email2="", email3="", homepage="", bday="",
+                             bmonth="-", byear="", aday="", amonth="-", ayear="", address2="", phone2="", notes=""))
+    app.session.logout()
