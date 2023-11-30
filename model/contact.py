@@ -26,3 +26,7 @@ class Group:
         self.address2 = address2
         self.phone2 = phone2
         self.notes = notes
+
+
+    def __init__(self,firstname):
+        self.firstname = firstname
