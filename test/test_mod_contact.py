@@ -1,7 +1,7 @@
 from model.contact import Group
 
 
-def test_mod_first_contact(app):
+def test_modify_first_contact_firstname(app):
     app.session.loqin(username="admin", password="secret")
-    app.contact.mod_first_contact (Group(firstname="888"))
+    app.contact.modify_first_contact(Group(firstname="firstname"))
     app.session.logout()
