@@ -9,5 +9,5 @@ def test_modify_first_group_name(app):
 
 def test_modify_first_group_header(app):
     app.session.loqin(username="admin", password="secret")
-    app.group.modify_first_group_header(Group(header="New header"))
+    app.group.modify_first_group(Group(header="New header"))
     app.session.logout()
