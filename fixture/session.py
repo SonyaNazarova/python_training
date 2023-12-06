@@ -3,10 +3,9 @@ class SessionHelper:
     def __init__(self, app):
         self.app = app
 
-
-    def loqin(self, username, password):
+    def login(self, username, password):
         wd = self.app.wd
-        self.app.open_home_paqe()
+        self.app.open_home_page()
         wd.find_element("name", "user").clear()
         wd.find_element("name", "user").send_keys(username)
         wd.find_element("name", "pass").click()
@@ -19,9 +18,8 @@ class SessionHelper:
         wd.find_element("link text", "Logout").click()
         wd.find_element("name", "user").clear()
 
-
-    def ensure_logout (self):
-        wd = self.app.wd
+    def ensure_logout(self):
+        self.app.wd
         if self.is_logged_in():
             self.logout()
 
@@ -29,10 +27,9 @@ class SessionHelper:
         wd = self.app.wd
         return len(wd.find_elements("link text", "Logout")) > 0
 
-
     def is_logged_in_as(self, username):
         wd = self.app.wd
-        return wd.find_element("xpath", "//div[@id='top']/form/b").text == "("+username+")"
+        return wd.find_element("xpath", "//div/div[1]/form/b").text == "(" + username + ")"
 
     def ensure_login(self, username, password):
         wd = self.app.wd
