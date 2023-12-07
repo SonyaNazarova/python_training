@@ -7,7 +7,9 @@ class ContactHelper:
 
     def open_contact_page(self):
         wd = self.app.wd
-        wd.find_element("link text", "add new").click()
+        if not (wd.current_url.endswith("http://localhost/addressbook/") and len(wd.find_elements("name", "Select all")) > 0):
+            wd.find_element("link text", "add new").click()
+
 
     def create(self, contact):
         wd = self.app.wd

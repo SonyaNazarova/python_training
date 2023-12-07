@@ -5,7 +5,8 @@ class GroupHelper:
 
     def open_groups_page(self):
         wd = self.app.wd
-        wd.find_element("link text", "groups").click()
+        if not (wd.current_url.endswith("/group.php") and len(wd.find_elements("name", "new")) > 0):
+            wd.find_element("link text", "groups").click()
 
     def create(self, group):
         wd = self.app.wd
@@ -16,7 +17,6 @@ class GroupHelper:
         # submit group creation
         wd.find_element("name", "submit").click()
         self.return_to_groups_page()
-
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -30,7 +30,6 @@ class GroupHelper:
         self.change_field_value("group_name", group.name)
         self.change_field_value("group_header", group.header)
         self.change_field_value("group_footer", group.footer)
-
 
     def return_to_groups_page(self):
         wd = self.app.wd
