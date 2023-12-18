@@ -88,7 +88,6 @@ class ContactHelper:
     def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.return_to_home()
-        self.select_contact_by_index(index)
         # open modification form
         wd.find_element("xpath", "//img[@alt='Edit']").click()
         #edit
