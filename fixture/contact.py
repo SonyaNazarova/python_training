@@ -90,7 +90,7 @@ class ContactHelper:
         self.return_to_home()
         self.select_contact_by_index(index)
         # open modification form
-        wd.find_element("xpath", "//img[@alt='Edit']")[index].click()
+        wd.find_elements("xpath", "//img[@alt='Edit']")[index].click()
         #edit
         self.fill_contact_form(new_contact_data)
         # submit group edit
