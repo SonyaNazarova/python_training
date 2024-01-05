@@ -9,7 +9,7 @@ class ContactHelper:
 
     def open_contact_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("http://localhost/addressbook/") and len(wd.find_elements("name", "Select all")) > 0):
+        if not (wd.current_url.endswith("/edit.php") and len(wd.find_elements("name", "Select all")) > 0):
             wd.find_element("link text", "add new").click()
 
 
