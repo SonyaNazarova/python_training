@@ -80,6 +80,19 @@ class ContactHelper:
         self.return_to_home()
         self.contact_cache = None
 
+
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.return_to_home()
+        self.select_contact_by_id(id)
+        # select first contact
+        #wd.find_element("name", "selected[]").click()
+        # submit deletion
+        wd.find_element("xpath", "//input[@value='Delete']").click()
+        wd.switch_to.alert.accept()
+        self.return_to_home()
+        self.contact_cache = None
+
     def modify_first_contact(self, new_contact_data):
         self.modify_contact_by_index(0)
 
@@ -98,9 +111,27 @@ class ContactHelper:
         self.return_to_home()
         self.contact_cache = None
 
+    def modify_contact_by_id(self, id, new_contact_data):
+        wd = self.app.wd
+        self.return_to_home()
+        self.select_contact_by_id(id)
+        # open modification form
+        wd.find_element("xpath", "//img[@alt='Edit']").click()
+        # edit
+        self.fill_contact_form(new_contact_data)
+        # submit group edit
+        wd.find_element("xpath", "//input[22]").click()
+        self.return_to_home()
+        self.contact_cache = None
+
     def select_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements("name", "selected[]")[index].click()
+
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element("css selector", "input[value='%s']" % id).click()
 
     def count(self):
         wd = self.app.wd
@@ -167,9 +198,8 @@ class ContactHelper:
         telephone_home = re.search("H: (.*)", text).group(1)
         telephone_work = re.search("W: (.*)", text).group(1)
         telephone_mobile = re.search("M: (.*)", text).group(1)
-        phone2 = re.search("P: (.*)", text).group(1)
         return Contact(telephone_home=telephone_home, telephone_mobile=telephone_mobile,
-                    telephone_work=telephone_work, phone2=phone2)
+                    telephone_work=telephone_work)
 
 
 
