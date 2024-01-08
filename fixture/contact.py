@@ -89,7 +89,6 @@ class ContactHelper:
         #wd.find_element("name", "selected[]").click()
         # submit deletion
         wd.find_element("xpath", "//input[@value='Delete']").click()
-        wd.switch_to.alert.accept()
         self.return_to_home()
         self.contact_cache = None
 
@@ -116,11 +115,8 @@ class ContactHelper:
         self.return_to_home()
         self.select_contact_by_id(id)
         # open modification form
-        wd.find_element("xpath", "//img[@alt='Edit']").click()
-        # edit
         self.fill_contact_form(new_contact_data)
-        # submit group edit
-        wd.find_element("xpath", "//input[22]").click()
+        wd.find_element("xpath", "//input[@value='Update']").click()
         self.return_to_home()
         self.contact_cache = None
 
@@ -131,7 +127,9 @@ class ContactHelper:
 
     def select_contact_by_id(self, id):
         wd = self.app.wd
+        self.return_to_home()
         wd.find_element("css selector", "input[value='%s']" % id).click()
+        wd.find_element("css selector", "a[href='edit.php?id=%s']" % id).click()
 
     def count(self):
         wd = self.app.wd
