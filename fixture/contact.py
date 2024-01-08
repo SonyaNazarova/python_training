@@ -169,6 +169,9 @@ class ContactHelper:
         wd.find_elements("xpath", "//img[@title='Edit']")[index].click()
 
 
+
+
+
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
         self.open_contact_to_edit_by_index(index)
@@ -199,5 +202,22 @@ class ContactHelper:
         return Contact(telephone_home=telephone_home, telephone_mobile=telephone_mobile,
                     telephone_work=telephone_work)
 
-
+    def get_contact_info_from_edit_page_id(self, id):
+        wd = self.app.wd
+        self.select_contact_by_id(id)
+        firstname = wd.find_element("name", "firstname").get_attribute("value")
+        lastname = wd.find_element("name", "lastname").get_attribute("value")
+        id = wd.find_element("name", "id").get_attribute("value")
+        telephone_home = wd.find_element("name", "home").get_attribute("value")
+        telephone_mobile = wd.find_element("name", "mobile").get_attribute("value")
+        telephone_work = wd.find_element("name", "work").get_attribute("value")
+        phone2 = wd.find_element("name", "phone2").get_attribute("value")
+        address = wd.find_element("name", "address").get_attribute("value")
+        email = wd.find_element("name", "email").get_attribute("value")
+        email2 = wd.find_element("name", "email2").get_attribute("value")
+        email3 = wd.find_element("name", "email3").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id,
+                    telephone_home=telephone_home, telephone_mobile=telephone_mobile,
+                    telephone_work=telephone_work, phone2=phone2, address=address,
+                       email=email, email2=email2, email3=email3)
 
