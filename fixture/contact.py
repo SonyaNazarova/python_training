@@ -1,6 +1,9 @@
 from selenium.webdriver.support.ui import Select
 from model.contact import Contact
+from random import randrange
 import re
+from model.group import Group
+
 
 class ContactHelper:
 
@@ -123,6 +126,31 @@ class ContactHelper:
     def select_contact_by_index(self, index):
         wd = self.app.wd
         wd.find_elements("name", "selected[]")[index].click()
+
+
+    def select_contact(self, id):
+        wd = self.app.wd
+        self.return_to_home()
+        wd.find_element("css selector", "input[value='%s']" % id).click()
+        #wd.find_element("css selector", "a[href='edit.php?id=%s']" % id).click()
+
+    def select_group(self, id, group_id):
+        wd = self.app.wd
+        self.select_contact(id)
+        wd.find_element("name", "to_group").click()
+        Select(wd.find_element("name", "to_group")).select_by_value('%s' % group_id)
+        wd.find_element("css selector", "select[name=\"to_group\"]&gt;option[value=\"%s\"]"% group_id).click()
+        wd.find_element("xpath", "//input[@value='Add to']").click()
+        self.app.open_home_page()
+
+    def del_contact_from_group(self, id, group_id):
+        wd = self.app.wd
+        wd.find_element("name", "group").click()
+        Select(wd.find_element("name", "group")).select_by_value('%s' % group_id)
+        wd.find_element("css selector", "input[id='%s']" % id).click()
+        wd.find_element("xpath", "//input[@name='remove']").click()
+        self.return_to_home()
+
 
 
     def select_contact_by_id(self, id):
