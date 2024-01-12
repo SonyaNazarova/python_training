@@ -20,7 +20,7 @@ class ContactHelper:
         wd = self.app.wd
         self.open_contact_page()
         self.fill_contact_form(contact)
-        wd.find_element("xpath", "//input[21]").click()
+        wd.find_element("name", "submit").click()
         self.return_to_home()
         self.contact_cache = None
 
@@ -109,7 +109,7 @@ class ContactHelper:
         #edit
         self.fill_contact_form(new_contact_data)
         # submit group edit
-        wd.find_element("xpath", "//input[22]").click()
+        wd.find_element("name", "submit").click()
         self.return_to_home()
         self.contact_cache = None
 
@@ -249,3 +249,15 @@ class ContactHelper:
                     telephone_work=telephone_work, phone2=phone2, address=address,
                        email=email, email2=email2, email3=email3)
 
+    def get_contact_info_from_home_page_id(self, id):
+        wd = self.app.wd
+        self.open_contact_page()
+        self.contact_cache = []
+        contact = wd.find_element("css selector", "tr[name='entry']:has(input[id='%s'])" % id)
+        lastname = contact.find_element("css selector", ".//td[2]").text
+        firstname = contact.find_element("css selector", ".//td[3]").text
+        address = contact.find_element("css selector", ".//td[4]").text
+        all_phones_from_home_page = contact.find_element("css selector", ".//td[6]").text
+        all_emails = contact.find_element("css selector", ".//td[5]").text
+        return Contact(firstname=firstname, lastname=lastname, id=id,
+                       all_phones_from_home_page=all_phones_from_home_page, address=address, all_emails=all_emails)
