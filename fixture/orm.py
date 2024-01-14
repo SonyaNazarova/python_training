@@ -60,3 +60,12 @@ class ORMFixture:
         orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
         return (self.convert_contacts_to_model
                 (select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups)))
+
+    def all_contacts_are_in_all_groups(self):
+        group_list = self.get_group_list()
+        contact_list = self.get_contact_list()
+        res = True
+        for group in group_list:
+            contact_in_groups = self.get_contacts_in_group(group)
+            res = res and (all(contact in contact_in_groups for contact in contact_list))
+        return res
