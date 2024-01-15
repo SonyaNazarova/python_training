@@ -24,5 +24,3 @@ def test_add_contact_from_group(app, db):
     app.contact.select_group(new_contacts.id, new_groups.id)
     contacts_in_group = db.get_contacts_in_group((Group(id=old_groups.id)))
     assert old_contacts == contacts_in_group
-
-
