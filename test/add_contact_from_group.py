@@ -4,7 +4,6 @@ import random
 
 
 
-
 def test_add_contact_from_group(app, db):
     old_contacts = db.get_contact_list()
     old_groups = db.get_group_list()
