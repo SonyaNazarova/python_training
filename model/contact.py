@@ -43,7 +43,8 @@ class Contact:
         return ((self.id is None or other.id is None or self.id ==other.id) and
                 (self.firstname is None or other.firstname is None or self.firstname ==other.firstname) and
                 (self.lastname is None or other.lastname is None or self.lastname == other.lastname) and
-                (self.address is None or other.address is None or self.address == other.address))
+                (self.address is None or other.address is None or self.address == other.address) and
+                (self.telephone_mobile is None or other.telephone_mobile is None or self.telephone_mobile == other.telephone_mobile))
 
 
     def id_or_max(self):

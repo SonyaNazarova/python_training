@@ -15,6 +15,10 @@ class ContactHelper:
         if not (wd.current_url.endswith("/addressbook/") and len(wd.find_elements("name", "Select all")) > 0):
             wd.find_element("link text", "add new").click()
 
+    def open_contacts_page(self):
+        wd = self.app.wd
+        wd.find_element("link text", "home").click()
+
 
     def create(self, contact):
         wd = self.app.wd
@@ -251,13 +255,13 @@ class ContactHelper:
 
     def get_contact_info_from_home_page_id(self, id):
         wd = self.app.wd
-        self.open_contact_page()
+        self.open_contacts_page()
         self.contact_cache = []
         contact = wd.find_element("css selector", "tr[name='entry']:has(input[id='%s'])" % id)
-        lastname = contact.find_element("css selector", ".//td[2]").text
-        firstname = contact.find_element("css selector", ".//td[3]").text
-        address = contact.find_element("css selector", ".//td[4]").text
-        all_phones_from_home_page = contact.find_element("css selector", ".//td[6]").text
-        all_emails = contact.find_element("css selector", ".//td[5]").text
+        lastname = contact.find_element("xpath", ".//td[2]").text
+        firstname = contact.find_element("xpath", ".//td[3]").text
+        address = contact.find_element("xpath", ".//td[4]").text
+        all_phones_from_home_page = contact.find_element("xpath", ".//td[6]").text
+        all_emails = contact.find_element("xpath", ".//td[5]").text
         return Contact(firstname=firstname, lastname=lastname, id=id,
                        all_phones_from_home_page=all_phones_from_home_page, address=address, all_emails=all_emails)
