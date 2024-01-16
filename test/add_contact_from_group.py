@@ -7,10 +7,10 @@ import random
 def test_add_contact_from_group(app, db):
     old_contacts = db.get_contact_list()
     old_groups = db.get_group_list()
-    if len(db.get_contact_list()) == 0:
+    if len(old_contacts) == 0:
         app.contact.create(Contact(firstname="test"))
         old_contacts = db.get_contact_list()
-    if len(db.get_group_list()) == 0:
+    if len(old_groups) == 0:
         app.group.create(Group(name="test"))
         old_groups = db.get_group_list()
     new_groups = random.choice(old_groups)
@@ -21,5 +21,5 @@ def test_add_contact_from_group(app, db):
     if new_contacts in db.get_contacts_in_group(new_groups):
         app.contact.del_contact_from_group(new_contacts.id, new_groups.id)
     app.contact.select_group(new_contacts.id, new_groups.id)
-    contacts_in_group = db.get_contacts_in_group((Group(id=old_groups.id)))
-    assert old_contacts == contacts_in_group
+    contacts_in_group = db.get_contacts_in_group((Group(id=new_groups.id)))
+    assert  new_contacts  in  contacts_in_group

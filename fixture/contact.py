@@ -138,21 +138,32 @@ class ContactHelper:
         wd.find_element("css selector", "input[value='%s']" % id).click()
         #wd.find_element("css selector", "a[href='edit.php?id=%s']" % id).click()
 
-    def select_group(self, id, group_id):
+    def select_group(self, id_contact, id_group):
         wd = self.app.wd
-        self.select_contact(id)
-        wd.find_element("name", "to_group").click()
-        Select(wd.find_element("name", "to_group")).select_by_value('%s' % group_id)
-        wd.find_element("css selector", "select[name=\"to_group\"]&gt;option[value=\"%s\"]"% group_id).click()
-        wd.find_element("xpath", "//input[@value='Add to']").click()
+        self.open_contacts_page()
+        select_group = Select(wd.find_element("name", "group"))
+        select_group.select_by_value("")
+        wd.find_element("css selector", "input[id='%s']" % id_contact).click()
+        select_group = Select(wd.find_element("name", "to_group"))
+        select_group.select_by_value('%s' % id_group)
+        wd.find_element("css selector", "input[type='submit']").click()
+        #wd.find_element("name", "to_group").click()
+        #Select(wd.find_element("name", "to_group")).select_by_value('%s' % group_id)
+        #wd.find_element("css selector", "select[name=\"to_group\"]&gt;option[value=\"%s\"]"% group_id).click()
+        #wd.find_element("xpath", "//input[@value='Add to']").click()
         self.app.open_home_page()
 
-    def del_contact_from_group(self, id, group_id):
+    def del_contact_from_group(self,  id_contact, id_group):
         wd = self.app.wd
-        wd.find_element("name", "group").click()
-        Select(wd.find_element("name", "group")).select_by_value('%s' % group_id)
-        wd.find_element("css selector", "input[id='%s']" % id).click()
+        self.open_contacts_page()
+        select_group = Select(wd.find_element("name", "group"))
+        select_group.select_by_value('%s' % id_group)
+        wd.find_element("css selector", "input[id='%s']" % id_contact).click()
         wd.find_element("xpath", "//input[@name='remove']").click()
+        #wd.find_element("name", "group").click()
+        #Select(wd.find_element("name", "group")).select_by_value('%s' % id_group)
+        #wd.find_element("css selector", "input[id='%s']" % id_contact).click()
+        #wd.find_element("xpath", "//input[@name='remove']").click()
         self.return_to_home()
 
 
