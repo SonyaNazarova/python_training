@@ -22,5 +22,3 @@ def test_del_contact_from_group(app, db):
     app.contact.del_contact_from_group(contact.id, group.id)
     contact_in_group = db.get_contacts_in_group(group)
     assert contact not in  contact_in_group
-
-
