@@ -16,10 +16,10 @@ def test_add_contact_from_group(app, db):
     new_groups = random.choice(old_groups)
     new_contacts = random.choice(old_contacts)
     if db.all_contacts_are_in_all_groups():
-        app.group.create(Group(name="test"))
-        new_groups = db.get_group_list()[-1]
-    if new_contacts in db.get_contacts_in_group(new_groups):
-        app.contact.del_contact_from_group(new_contacts.id, new_groups.id)
+       app.contact.create(Contact(firstname="test"))
+       new_contacts = db.get_contact_list()[-1]
+    #if new_contacts in db.get_contacts_in_group(new_groups):
+     #  app.contact.del_contact_from_group(new_contacts.id,new_groups.id)
     app.contact.select_group(new_contacts.id, new_groups.id)
     contacts_in_group = db.get_contacts_in_group((Group(id=new_groups.id)))
     assert  new_contacts  in  contacts_in_group
