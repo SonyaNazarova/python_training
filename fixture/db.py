@@ -44,10 +44,10 @@ class DbFixture:
 
     def get_contacts_in_group(self, group):
         list = []
-        cursor = self.connection.cursor(group)
+        cursor = self.connection.cursor()
         try:
             cursor.execute(
-                "select addressbook.id, addressbook.firstname, addressbook.lastname, addressbook.address, addressbook.home, addressbook.mobile, addressbook.work, addressbook.phone2, addressbook.email, addressbook.email2, addressbook.email3 from addressbook JOIN address_in_groups ON addressbook.id=address_in_groups.id")
+                "select addressbook.id, addressbook.firstname, addressbook.lastname, addressbook.address, addressbook.home, addressbook.mobile, addressbook.work, addressbook.phone2, addressbook.email, addressbook.email2, addressbook.email3 from addressbook JOIN address_in_groups ON addressbook.id=address_in_groups.id where address_in_groups.group_id=" + group.id)
             for row in cursor:
                 (id, firstname, lastname, address, telephone_home, telephone_mobile, telephone_work, phone2,email, email2, email3) = row
                 list.append(Contact(id=str(id), firstname=firstname, lastname=lastname, address=address,
